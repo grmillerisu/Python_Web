@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import render_template
 from app import app
+from app import socketio
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=False)
+   import start_debugger
+   socketio.run(app)
