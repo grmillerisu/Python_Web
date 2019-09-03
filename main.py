@@ -5,4 +5,4 @@ from app import socketio
 
 if __name__ == '__main__':
    import start_debugger
-   socketio.run(app)
+   #socketio.run(app)
