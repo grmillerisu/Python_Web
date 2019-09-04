@@ -16,6 +16,11 @@ $(document).ready(function(){
             numbers_string = numbers_string + '<p>' + numbers_received[i].toString() + '</p>';
         }
         $('#log').html(numbers_string);
+        numbers_string = '';
+        for (var i = 0; i < numbers_received.length; i++){
+            numbers_string = numbers_string + '<p>' + (numbers_received[i]+1).toString() + '</p>';
+        }
+        $('#log2').html(numbers_string);
     });
 
 });
