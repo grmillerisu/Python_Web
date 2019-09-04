@@ -38,4 +38,3 @@ def test_connect():
 @socketio.on('disconnect', namespace='/messaging')
 def test_disconnect():
    print('Client disconnected')
-   thread_stop_event.set()
