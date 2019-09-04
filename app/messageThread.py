@@ -28,8 +28,8 @@ class MessageThread(Thread):
       acc.accx = -123.444
       acc.accy = 567.777
       acc.accz = 890.001
-      msg1 = {"name":"Position3D","length":2,'str':pos.toString()}
-      msg2 = {"name":"Acceleration","length":3,'str':acc.toString()}
+      msg1 = {"name":"Position3D","length":5,'str':pos.toString()}
+      msg2 = {"name":"Acceleration","length":5,'str':acc.toString()}
       msgs = [msg1,msg2]
       while not thread_stop_event.isSet():
          pos.lat += 0.1

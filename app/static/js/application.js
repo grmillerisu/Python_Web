@@ -18,12 +18,19 @@ $(document).ready(function(){
        } else {
           msgDict[maxLengthKey] = msg.length;
           msgDict[messagesKey] = [];
-          msgDict[messageTitleKey] = '<h3>' + msg.name + '</h3>';
+          msgDict[messageTitleKey] = '<h4>' + msg.name + '</h4>';
        }
        msgDict[messagesKey].push(msg.str);
        var message_string = msgDict[messageTitleKey];
        for (var i = 0; i < msgDict[messagesKey].length; i++){
-           message_string = message_string + '<p>' + msgDict[messagesKey][i] + '</p>';
+
+           if (i == msgDict[messagesKey].length -1) {
+             message_string = message_string + '<p>' + msgDict[messagesKey][i];
+             message_string = message_string + ". Latest message ";
+          } else {
+             message_string = message_string + '<p> ' + msgDict[messagesKey][i];
+          }
+           message_string = message_string + '</p>'
        }
        var messageList = msgDict['messageStrings']
        var numberOfMessages = messageList.length;

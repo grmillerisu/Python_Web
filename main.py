@@ -20,4 +20,5 @@ def get_ip():
 # end def
 
 if __name__ == '__main__':
-   socketio.run(app, host= get_ip())
+   #app.config['SERVER_NAME'] = 'serv'
+   socketio.run(app, host='0.0.0.0')

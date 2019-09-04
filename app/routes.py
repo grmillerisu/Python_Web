@@ -12,13 +12,12 @@ from app import MessageThread
 def hello_world():
     message = {'name':'Pos3d',
                'time' : datetime.now().time()}
-    return render_template('message.html',title='The Title',message=message)
+    return render_template('time.html',title='The Title',message=message)
 
-@app.route('/index')
+@app.route('/messages')
 def ind():
-   print("Index")
 
-   return render_template('index.html')
+   return render_template('messages.html')
 # end def
 
 @socketio.on('connect', namespace='/messaging')
