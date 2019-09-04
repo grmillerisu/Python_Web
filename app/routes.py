@@ -2,7 +2,7 @@ from app import app
 from flask import render_template
 from datetime import datetime
 
-numbers = [1,2,3,4,5,6,7,8,9]
+numbers = [1,2,3]
 
 @app.route('/')
 def hello_world():
@@ -28,4 +28,12 @@ def ind():
       numb += "]\n"
    else:
       numb = "var numbers_received = [];"
-   return render_template('index.html',numb=numb)
+   msg1 = {"name":"first_message","length":5}
+   msg2 = {"name":"second_message","length":8}
+   messages = [msg1,msg2]
+   msg_var = [str(msg1),str(msg2)]
+   msg_str = ""
+   msg_str += "var msg1 = " + str(msg1) + "\n"
+   msg_str += "var msg2 = " + str(msg2) + "\n"
+   msg_str += "var msg_Var = [msg1, msg2]\n"
+   return render_template('index.html',numb=numb,messages=messages, msg_str=msg_str)

@@ -3,6 +3,15 @@ $(document).ready(function(){
     //connect to the socket server.
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
+    var arrayLength = msg_var.length;
+    for(var i = 0; i < arrayLength; i++) {
+      message = msg_var[i];
+      socket.on(message['name'], function(msg) {
+         console.log("Received " + message['name'] + msg.number);
+         var str = '<p>' + msg.number.toString() + '</p>';
+         $('#'+message['name']+'_log').html(str);
+      });
+   }
     //receive details from server
     socket.on('newnumber', function(msg) {
         console.log("Received number" + msg.number);
