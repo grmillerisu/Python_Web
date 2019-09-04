@@ -2,8 +2,11 @@ from app import app
 from flask import render_template
 from flask import jsonify
 from datetime import datetime
-
-numbers = [1,2,3]
+from app import socketio
+from time import sleep
+from threading import Thread, Event
+from app import thread, thread_stop_event
+from app import MessageThread
 
 @app.route('/')
 def hello_world():
@@ -14,41 +17,25 @@ def hello_world():
 @app.route('/index')
 def ind():
    print("Index")
-   global numbers
-   i=0
-   leng = len(numbers)
-   if len(numbers) > 0:
-      numb = "var numbers_received = ["
-      for number in numbers:
-         i += 1
-         numb += str(number)
-         if i is not leng:
-            numb += ", "
-         # end if
-      # end for
-      numb += "];\n"
-   else:
-      numb = "var numbers_received = [];"
-   msg1 = {"name":"Position3D","length":5}
-   msg2 = {"name":"Acceleration","length":8}
-   messages = [msg1,msg2]
 
-   return render_template('index.html',numb=numb,messages=messages)
+   return render_template('index.html')
 # end def
 
+@socketio.on('connect', namespace='/messaging')
+def test_connect():
+   # need visibility of the global thread object
+   global thread
+   print('Client connected')
+
+   # Start the random number generator thread only if the thread has not been started before.
+   if not thread.isAlive():
+      print("Starting Thread")
+      thread = MessageThread()
+      thread_stop_event.clear()
+      thread.start()
 
 
-def dict_to_str(dic):
-   string = "{"
-   for key in dic:
-      string += "%s%s%s" % ("'",key,"':")#"'" + key + '":'
-      try:
-         string += str(int(dic[key]))
-      except ValueError:
-         string += "'%s'" % dic[key]
-      string += ", "
-   # end for
-   string = string[:-2]
-   string += "}"
-   return string
-# end def
+@socketio.on('disconnect', namespace='/messaging')
+def test_disconnect():
+   print('Client disconnected')
+   thread_stop_event.set()
