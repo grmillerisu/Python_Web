@@ -1,9 +1,6 @@
 import os
 os.sys.path.append("app")
 
-
-from flask import Flask
-from flask import render_template
 from app import app
 from app import socketio
 
@@ -23,5 +20,4 @@ def get_ip():
 # end def
 
 if __name__ == '__main__':
-   import start_debugger
    socketio.run(app, host= get_ip())

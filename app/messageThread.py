@@ -6,8 +6,13 @@ from time import sleep
 
 class MessageThread(Thread):
    def __init__(self):
-      self.delay = 1
+      self.delay = 0.5
       super(MessageThread, self).__init__()
+   # end def
+
+   def run(self):
+      self.sendMessages()
+   # end def
 
    def sendMessages(self):
       """
@@ -41,6 +46,5 @@ class MessageThread(Thread):
          sleep(self.delay)
          # end for
       # end while
-
-   def run(self):
-      self.sendMessages()
+   # end def
+# end class
