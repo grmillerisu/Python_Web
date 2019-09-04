@@ -3,8 +3,6 @@
 <head>
     <script src={{url_for('static', filename='js/jquery-3.3.1.min.js')}}></script>
     <script src={{url_for('static', filename='js/socket.io.min.js')}}></script>
-    <script> {{ numb }} </script>
-    <script> {{msg_str}} </script>
     <script src={{url_for('static', filename='js/application.js')}}></script>
     {% if title %}
     <title>{{ title }}</title>
@@ -24,11 +22,8 @@
 <div class="container" id="content">
     <div class="row">
         <p>Messages received will appear here</p>
-        {%for message in messages %}
-        <h3>{{message.name}}</h3>
-        <div id="{{message.name}}_log">
-        </div> <!-- /#{{message.name}} -->
-        {%endfor%}
+        <div id="log">
+        </div>
     </div>
 </div>
 

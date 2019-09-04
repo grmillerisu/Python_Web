@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template
+from flask import jsonify
 from datetime import datetime
 
 numbers = [1,2,3]
@@ -25,15 +26,29 @@ def ind():
             numb += ", "
          # end if
       # end for
-      numb += "]\n"
+      numb += "];\n"
    else:
       numb = "var numbers_received = [];"
-   msg1 = {"name":"first_message","length":5}
-   msg2 = {"name":"second_message","length":8}
+   msg1 = {"name":"Position3D","length":5}
+   msg2 = {"name":"Acceleration","length":8}
    messages = [msg1,msg2]
-   msg_var = [str(msg1),str(msg2)]
-   msg_str = ""
-   msg_str += "var msg1 = " + str(msg1) + "\n"
-   msg_str += "var msg2 = " + str(msg2) + "\n"
-   msg_str += "var msg_Var = [msg1, msg2]\n"
-   return render_template('index.html',numb=numb,messages=messages, msg_str=msg_str)
+
+   return render_template('index.html',numb=numb,messages=messages)
+# end def
+
+
+
+def dict_to_str(dic):
+   string = "{"
+   for key in dic:
+      string += "%s%s%s" % ("'",key,"':")#"'" + key + '":'
+      try:
+         string += str(int(dic[key]))
+      except ValueError:
+         string += "'%s'" % dic[key]
+      string += ", "
+   # end for
+   string = string[:-2]
+   string += "}"
+   return string
+# end def
