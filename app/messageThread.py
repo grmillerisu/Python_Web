@@ -6,8 +6,10 @@ from time import sleep
 
 class MessageThread(Thread):
    def __init__(self):
-      self.delay = 0.5
+      self.delay = 3
       super(MessageThread, self).__init__()
+      self.pos = Position3D()
+      self.acc = Acceleration()
    # end def
 
    def run(self):
@@ -19,30 +21,26 @@ class MessageThread(Thread):
       Generate a random number every 1 second and emit to a socketio instance (broadcast)
       Ideally to be run in a separate thread?
       """
-      # infinite loop of magical random numbers
-      pos = Position3D()
-      pos.lat = 123.456
-      pos.lon = 789.012
-      pos.alt = 101.3
-      acc = Acceleration()
-      acc.accx = -123.444
-      acc.accy = 567.777
-      acc.accz = 890.001
-      msg1 = {"name":"Position3D","length":5,'str':pos.toString()}
-      msg2 = {"name":"Acceleration","length":5,'str':acc.toString()}
-      msgs = [msg1,msg2]
+      self.pos.lat = 123.456
+      self.pos.lon = 789.012
+      self.pos.alt = 101.3
+      self.acc.accx = -123.444
+      self.acc.accy = 567.777
+      self.acc.accz = 890.001
+      self.msg1 = {"name":"Position3D","length":5,'str':self.pos.toString()}
+      self.msg2 = {"name":"Acceleration","length":5,'str':self.acc.toString()}
       while not thread_stop_event.isSet():
-         pos.lat += 0.1
-         pos.lon -= 0.1
-         pos.alt += 3.1
-         msg1['str'] = pos.toString()
-         socketio.emit('newmessage', msg1, namespace='/messaging')
+         self.pos.lat += 0.1
+         self.pos.lon -= 0.1
+         self.pos.alt += 3.1
+         self.msg1['str'] = self.pos.toString()
+         socketio.emit('newmessage', self.msg1, namespace='/messaging')
          sleep(self.delay)
-         acc.accx += 0.2
-         acc.accy -= 0.2
-         acc.accz += 1.1
-         msg2['str'] = acc.toString()
-         socketio.emit('newmessage', msg2, namespace='/messaging')
+         self.acc.accx += 0.2
+         self.acc.accy -= 0.2
+         self.acc.accz += 1.1
+         self.msg2['str'] = self.acc.toString()
+         socketio.emit('newmessage', self.msg2, namespace='/messaging')
          sleep(self.delay)
          # end for
       # end while

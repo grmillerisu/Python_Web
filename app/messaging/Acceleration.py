@@ -81,8 +81,6 @@ class Acceleration:
    def toString(self):
       str = ""
       spaces = 0
-      str += "Acceleration:\n"
-      spaces += 3
       str += " " * spaces + "accx = %8.4lf" % self.accx + "\n"
       str += " " * spaces + "accy = %8.4lf" % self.accy + "\n"
       str += " " * spaces + "accz = %8.4lf" % self.accz + "\n"

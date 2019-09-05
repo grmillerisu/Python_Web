@@ -33,6 +33,11 @@ def test_connect():
       thread_stop_event.clear()
       thread.start()
 
+   # sends the messages to all clients
+   #for i in range(0,5):
+   #   socketio.emit('newmessage', thread.msg1, namespace='/messaging')
+   #   socketio.emit('newmessage', thread.msg2, namespace='/messaging')
+
 
 @socketio.on('disconnect', namespace='/messaging')
 def test_disconnect():

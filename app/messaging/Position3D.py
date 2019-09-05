@@ -81,8 +81,6 @@ class Position3D:
    def toString(self):
       str = ""
       spaces = 0
-      str += "Position3D:\n"
-      spaces += 3
       str += " " * spaces + "lat = %8.4lf" % self.lat + "\n"
       str += " " * spaces + "lon = %8.4lf" % self.lon + "\n"
       str += " " * spaces + "alt = %6.2f" % self.alt + "\n"
