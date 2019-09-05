@@ -5,6 +5,7 @@ from messaging import *
 from time import sleep
 import copy
 import os
+from datetime import datetime
 
 class MessageThread(Thread):
    def __init__(self):
@@ -42,14 +43,14 @@ class MessageThread(Thread):
          self.pos.lat += 0.1
          self.pos.lon -= 0.1
          self.pos.alt += 3.1
-         self.msg1['str'] = self.pos.toString()
+         self.msg1['str'] = self.pos.toString() + " | " + str(datetime.now().time())
          self.addToPosList(self.msg1)
          socketio.emit('newmessage', self.msg1, namespace='/messaging')
          sleep(self.delay)
          self.acc.accx += 0.2
          self.acc.accy -= 0.2
          self.acc.accz += 1.1
-         self.msg2['str'] = self.acc.toString()
+         self.msg2['str'] = self.acc.toString() + " | " + str(datetime.now().time())
          self.addToAccList(self.msg2)
          socketio.emit('newmessage', self.msg2, namespace='/messaging')
          sleep(self.delay)
