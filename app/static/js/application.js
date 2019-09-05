@@ -15,25 +15,28 @@ $(document).ready(function(){
              for(var i = 0; i < initLength; i++) {
                 parseMessage(initMessageList[i]);
              }
-          } else {
-             parse = true;
+             writeHtml();
           }
        } else {
           parse = true;
        }
        if(parse) {
           parseMessage(msg);
+          writeHtml();
        }
-       messageList = msgDict['messageStrings']
-       numberOfMessages = messageList.length;
-       var final_string = '';
-       for (var i=0; i < numberOfMessages; i++) {
-         final_string += messageList[i]['message_string'];
-       }
-       msgDict['finalString'] = final_string
-       $('#log').html(final_string);
     });
 });
+
+function writeHtml() {
+   messageList = msgDict['messageStrings']
+   numberOfMessages = messageList.length;
+   var final_string = '';
+   for (var i=0; i < numberOfMessages; i++) {
+     final_string += messageList[i]['message_string'];
+   }
+   msgDict['finalString'] = final_string
+   $('#log').html(final_string);
+}
 
 function parseMessage(msg) {
    var msgLength = msg.length;
