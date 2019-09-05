@@ -81,16 +81,16 @@ class Acceleration:
    def toString(self):
       str = ""
       spaces = 0
-      str += " " * spaces + "accx = %8.4lf" % self.accx + "\n"
-      str += " " * spaces + "accy = %8.4lf" % self.accy + "\n"
-      str += " " * spaces + "accz = %8.4lf" % self.accz + "\n"
+      str += " " * spaces + "accx = %8.4lf" % self.accx
+      str += " " * spaces + "accy = %8.4lf" % self.accy
+      str += " " * spaces + "accz = %8.4lf" % self.accz
       return str
    # end def
 
    def toStringSpaces(self,spaces):
       str = ""
-      str += " " * spaces + "accx = %8.4lf" % self.accx + "\n"
-      str += " " * spaces + "accy = %8.4lf" % self.accy + "\n"
-      str += " " * spaces + "accz = %8.4lf" % self.accz + "\n"
+      str += " " * spaces + "accx = %8.4lf" % self.accx
+      str += " " * spaces + "accy = %8.4lf" % self.accy
+      str += " " * spaces + "accz = %8.4lf" % self.accz
       return str
 # end class

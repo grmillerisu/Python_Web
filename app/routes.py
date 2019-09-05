@@ -16,8 +16,17 @@ def hello_world():
 
 @app.route('/messages')
 def ind():
-
    return render_template('messages.html')
+# end def
+
+
+@app.route('/pos.txt')
+def pos():
+   global thread
+   str = ""
+   for msg in thread.posList:
+      str += msg['str'] + "\n";
+   return str
 # end def
 
 @socketio.on('connect', namespace='/messaging')

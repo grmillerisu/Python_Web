@@ -4,6 +4,7 @@ from app import thread_stop_event
 from messaging import *
 from time import sleep
 import copy
+import os
 
 class MessageThread(Thread):
    def __init__(self):
@@ -25,6 +26,7 @@ class MessageThread(Thread):
       self.msg2 = {"name":"Acceleration","length":5,'str':self.acc.toString(),'initMessage':False}
       self.addToPosList(self.msg1)
       self.addToAccList(self.msg2)
+      open("app/static/test.txt", 'w').close()
    # end def
 
    def run(self):
@@ -56,6 +58,7 @@ class MessageThread(Thread):
    # end def
 
    def addToPosList(self, msg):
+      self.writePos(msg)
       self.posList.append(copy.deepcopy(msg))
       if len(self.posList) > self.posLength:
          self.posList = self.posList[-self.posLength:]
@@ -76,6 +79,12 @@ class MessageThread(Thread):
       combinedList.extend(self.accList)
       msg = {'initMessage':True,'totalMessages':numMessages,'msgList':combinedList}
       socketio.emit('newmessage', msg, namespace='/messaging')
+   # end def
+
+
+   def writePos(self,msg):
+      with open("app/static/test.txt","a") as f:
+         f.write(msg['str'] + "\n")
    # end def
 
 # end class
