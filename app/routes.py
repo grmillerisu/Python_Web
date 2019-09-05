@@ -32,6 +32,7 @@ def test_connect():
       thread = MessageThread()
       thread_stop_event.clear()
       thread.start()
+   thread.sendInitMessage()
 
    # sends the messages to all clients
    #for i in range(0,5):
