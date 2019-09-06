@@ -21,7 +21,6 @@ def get_ip():
 # end def
 
 if __name__ == '__main__':
-   #app.config['SERVER_NAME'] = 'serv'
    if 'debug' in sys.argv:
       import start_debugger
    # end if

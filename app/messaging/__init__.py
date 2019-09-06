@@ -9,3 +9,4 @@ from messaging import Barometer
 Barometer = Barometer.Barometer
 from messaging import Message
 Message = Message.Message
+messages = ["Position3D", "Gps", "Acceleration", "Barometer"]
