@@ -6,6 +6,7 @@ from time import sleep
 import copy
 import os
 from datetime import datetime
+import serial
 
 class MessageThread(Thread):
    def __init__(self):
@@ -23,8 +24,8 @@ class MessageThread(Thread):
       self.acc.accx = -123.444
       self.acc.accy = 567.777
       self.acc.accz = 890.001
-      self.msg1 = {"name":"Position3D","length":5,'str':self.pos.toString(),'initMessage':False}
-      self.msg2 = {"name":"Acceleration","length":5,'str':self.acc.toString(),'initMessage':False}
+      self.msg1 = {"name":"Position3D","length":5,'str':self.pos.toString()+ " | " + str(datetime.now().time()),'initMessage':False}
+      self.msg2 = {"name":"Acceleration","length":5,'str':self.acc.toString()+ " | " + str(datetime.now().time()),'initMessage':False}
       self.addToPosList(self.msg1)
       self.addToAccList(self.msg2)
       open("app/static/test.txt", 'w').close()

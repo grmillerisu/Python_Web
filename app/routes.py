@@ -7,26 +7,21 @@ from time import sleep
 from threading import Thread, Event
 from app import thread, thread_stop_event
 from app import MessageThread
+import os
 
 @app.route('/')
 def hello_world():
-    message = {'name':'Pos3d',
+   message = {'name':'Pos3d',
                'time' : datetime.now().time()}
-    return render_template('time.html',title='The Title',message=message)
+   img = app.config['IMAGE_FOLDER']
+   full_filename = os.path.join(app.config['IMAGE_FOLDER'], 'Cyroc-Logo-Tansparent.png')
+   return render_template('time.html',title='CyRoc Home',message=message,img=full_filename)
 
 @app.route('/messages')
 def ind():
-   return render_template('messages.html')
-# end def
-
-
-@app.route('/pos.txt')
-def pos():
-   global thread
-   str = ""
-   for msg in thread.posList:
-      str += msg['str'] + "\n";
-   return str
+   img = app.config['IMAGE_FOLDER']
+   full_filename = os.path.join(app.config['IMAGE_FOLDER'], 'Cyroc-Logo-Tansparent.png')
+   return render_template('messages.html',img=full_filename)
 # end def
 
 @socketio.on('connect', namespace='/messaging')
@@ -41,14 +36,12 @@ def test_connect():
       thread = MessageThread()
       thread_stop_event.clear()
       thread.start()
+   # end if
    thread.sendInitMessage()
-
-   # sends the messages to all clients
-   #for i in range(0,5):
-   #   socketio.emit('newmessage', thread.msg1, namespace='/messaging')
-   #   socketio.emit('newmessage', thread.msg2, namespace='/messaging')
-
+# end def
 
 @socketio.on('disconnect', namespace='/messaging')
 def test_disconnect():
    print('Client disconnected')
+   # don't do anything else
+# end def

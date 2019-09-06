@@ -1,31 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <script src={{url_for('static', filename='js/jquery-3.3.1.min.js')}}></script>
-    <script src={{url_for('static', filename='js/socket.io.min.js')}}></script>
-    <script src={{url_for('static', filename='js/application.js')}}></script>
-    {% if title %}
-    <title>{{ title }}</title>
-    {% else %}
-    <title>Cyclone Rocketry Avionics</title>
-    {% endif %}
-</head>
-<body>
-<div>CyRoc: <a href="/">Home</a></div>
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container">
   <div class="jumbotron">
     <h1>Ground station received messages</h1>
     <p>Messages will appear below as they are received</p>
 </div>
 </div>
-
 <div class="container" id="content">
     <div class="row">
         <div id="log">
         </div>
     </div>
 </div>
-
-
-</body>
-</html>
+{% endblock %}

@@ -5,10 +5,16 @@
       {% else %}
       <title>Cyclone Rocketry Avionics</title>
       {% endif %}
+      <script src={{url_for('static', filename='js/jquery-3.3.1.min.js')}}></script>
+      <script src={{url_for('static', filename='js/socket.io.min.js')}}></script>
+      <script src={{url_for('static', filename='js/application.js')}}></script>
     </head>
     <body>
-        <div>CyRoc: <a href="/">Home</a> <a href="/messages">Messages</a> </div>
-        <hr>
-        {% block content %}{% endblock %}
+         {%if img %}
+         <img src="{{img}}" alt="Cyclone Rocketry" style="width:215px;height:100px;">
+         {% endif %}
+         <div>CyRoc: <a href="/">Home</a> <a href="/messages">Messages</a> </div>
+         <hr>
+         {% block content %}{% endblock %}
     </body>
 </html>

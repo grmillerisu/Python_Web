@@ -24,5 +24,5 @@ if __name__ == '__main__':
    #app.config['SERVER_NAME'] = 'serv'
    if 'debug' in sys.argv:
       import start_debugger
-   # end if 
-   socketio.run(app, host='0.0.0.0')
+   # end if
+   socketio.run(app, host= get_ip() )

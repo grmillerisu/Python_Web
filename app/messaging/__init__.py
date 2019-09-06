@@ -7,4 +7,5 @@ from messaging import Acceleration
 Acceleration = Acceleration.Acceleration
 from messaging import Barometer
 Barometer = Barometer.Barometer
-Message_list = [Position3D,Gps,Acceleration,Barometer]
+from messaging import Message
+Message = Message.Message
