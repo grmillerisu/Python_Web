@@ -1,14 +1,12 @@
 from app import app
 from flask import render_template
-from flask import jsonify
-from datetime import datetime
 from app import socketio
-from time import sleep
-from threading import Thread, Event
 from app import thread, thread_stop_event
 from app import MessageThread
 import os
 from app import messages
+import matplotlib.pyplot as plt
+import numpy as np
 
 @app.route('/')
 def hello_world():
@@ -57,6 +55,32 @@ def startThread():
    # end if
    thread.sendInitMessage()
 # end def
+
+
+def plotAcceleration():
+   accx = []
+   accy = []
+   accz = []
+   with open("app/static/acceleration.txt","r") as fp:
+      line = fp.readline()
+      while line:
+         split_line = line.split(",")
+         accx.append(float(split_line[1]))
+         accy.append(float(split_line[3]))
+         accz.append(float(split_line[5].split("|")[0]))
+         line = fp.readline()
+   # Plot the data
+   n = len(accx)
+   n = np.linspace(1,n,n)
+   plt.plot(n,accx, label='Accx')
+   plt.plot(n, accy, label='Accy')
+   plt.plot(n, accz, label='Accz')
+   # Add a legend
+   plt.legend()
+   # Show the plot
+   plt.savefig('app/static/acceleration.png', bbox_inches='tight')
+# end def
+
 
 @socketio.on('disconnect', namespace='/messaging')
 def test_disconnect():

@@ -104,8 +104,8 @@ class Acceleration:
       return str
 
    def increment(self):
-      self.accx += 0.4
-      self.accy += 0.4
-      self.accz += 0.4
+      self.accx += 0.1
+      self.accy += 0.2
+      self.accz += 0.3
    # end def
 # end class
