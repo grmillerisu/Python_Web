@@ -15,6 +15,8 @@ class MessageThread(Thread):
       self.messages = messages
       self.default_msg_dict = {"name":"","length":0,"str":"","initMessage":False}
       self.displayLength = 5
+      self.messaging = Message()
+      self.messaging.setAllCallbacks(self.messageCallback)
       for message in self.messages:
          msg_lower = message.lower()
          cmd = "self.%s = %s()" %(msg_lower,message)
@@ -39,10 +41,10 @@ class MessageThread(Thread):
    # end def
 
    def run(self):
-      self.sendMessages()
+      self.createLoop()
    # end def
 
-   def sendMessages(self):
+   def createLoop(self):
       """
       Generate a random number every 1 second and emit to a socketio instance (broadcast)
       Ideally to be run in a separate thread?
@@ -52,18 +54,29 @@ class MessageThread(Thread):
             msg_lower = message.lower()
             cmd = "self.%s.increment()" % msg_lower
             exec(cmd)
-            cmd = "self.str = self.%s.toStringCsv() + \" | \" + str(datetime.now().time())" % msg_lower
+            cmd = "self.buff = self.%s.packWithHeader()" % msg_lower
             exec(cmd)
-            cmd = "self.%s_msg['str'] = \"%s\"" % (msg_lower,self.str)
-            exec(cmd)
-            cmd = "self.addMessageToList(\"%s\",self.%s_msg)"% (message,msg_lower)
-            exec(cmd)
-            cmd = "self.msgToSend = self.%s_msg" % msg_lower
-            exec(cmd)
-            socketio.emit('newmessage', self.msgToSend, namespace='/messaging')
+            self.messaging.recv(self.buff)
             sleep(self.delay)
          # end for
       # end while
+   # end def
+
+   def messageCallback(self,message):
+      type_str = str(type(message))
+      message_type = type_str.split(".")[1]
+      msg_lower = message_type.lower()
+      cmd = "self.%s = message" % msg_lower
+      exec(cmd)
+      cmd = "self.str = self.%s.toStringCsv() + \" | \" + str(datetime.now().time())" % msg_lower
+      exec(cmd)
+      cmd = "self.%s_msg['str'] = \"%s\"" % (msg_lower,self.str)
+      exec(cmd)
+      cmd = "self.addMessageToList(\"%s\",self.%s_msg)"% (message_type,msg_lower)
+      exec(cmd)
+      cmd = "self.msgToSend = self.%s_msg" % msg_lower
+      exec(cmd)
+      socketio.emit('newmessage', self.msgToSend, namespace='/messaging')
    # end def
 
    def addMessageToList(self,messageName,msg):
