@@ -8,20 +8,32 @@ from threading import Thread, Event
 from app import thread, thread_stop_event
 from app import MessageThread
 import os
+from app import messages
 
 @app.route('/')
 def hello_world():
    message = {'name':'Pos3d',
                'time' : datetime.now().time()}
    img = app.config['IMAGE_FOLDER']
+   msgList = getMessageFiles(messages)
    full_filename = os.path.join(app.config['IMAGE_FOLDER'], 'Cyroc-Logo-Tansparent.png')
-   return render_template('time.html',title='CyRoc Home',message=message,img=full_filename)
+   return render_template('time.html',title='CyRoc Home',message=message,img=full_filename,msg_list = msgList)
 
 @app.route('/messages')
 def ind():
    img = app.config['IMAGE_FOLDER']
+   msgList = getMessageFiles(messages)
    full_filename = os.path.join(app.config['IMAGE_FOLDER'], 'Cyroc-Logo-Tansparent.png')
-   return render_template('messages.html',img=full_filename)
+   return render_template('messages.html',img=full_filename,msg_list = msgList)
+# end def
+
+def getMessageFiles(msgList):
+   retList = list()
+   for msg in msgList:
+      fp = "static\\%s.txt" % msg.lower()
+      message = {'name':msg.lower(), 'fp':fp}
+      retList.append(message)
+   return retList
 # end def
 
 @socketio.on('connect', namespace='/messaging')

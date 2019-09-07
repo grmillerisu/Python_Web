@@ -13,7 +13,8 @@
          {%if img %}
          <img src="{{img}}" alt="Cyclone Rocketry" style="width:215px;height:100px;">
          {% endif %}
-         <div>CyRoc: <a href="/">Home</a> <a href="/messages">Messages</a> </div>
+         <div>CyRoc: <a href="/">Home</a> <a href="/messages">Messages</a> {%if msg_list%}{%for msg in msg_list%} <a href="{{msg.fp}}">{{msg.name}}</a> {%endfor%}{%endif%}
+           </div>
          <hr>
          {% block content %}{% endblock %}
     </body>
