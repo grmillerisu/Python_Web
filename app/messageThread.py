@@ -42,13 +42,15 @@ class MessageThread(Thread):
 
    def run(self):
       self.createLoop()
+      print("MessageThread stopping")
    # end def
 
    def createLoop(self):
       """
-      Generate a random number every 1 second and emit to a socketio instance (broadcast)
-      Ideally to be run in a separate thread?
+      Loop until the thread stop event is set. Creates messages and sends them
+      with socketio
       """
+      global thread_stop_event
       while not thread_stop_event.isSet():
          for message in self.messages:
             msg_lower = message.lower()
@@ -106,7 +108,6 @@ class MessageThread(Thread):
       msg = {'initMessage':True,'totalMessages':numMessages,'msgList':self.combinedList}
       socketio.emit('newmessage', msg, namespace='/messaging')
    # end def
-
 
    def writeMessage(self,message,msg):
       msg_lower = message.lower()
