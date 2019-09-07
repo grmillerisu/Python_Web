@@ -8,9 +8,9 @@ app.config['IMAGE_FOLDER'] = os.path.join('static', 'images')
 # turn the flask app into a socketio app
 socketio = SocketIO(app)
 
-# random number Generator Thread
-thread = Thread()
+# thread to send messages to the JS front end
 thread_stop_event = Event()
+thread = Thread()
 
 from messageThread import MessageThread
 
