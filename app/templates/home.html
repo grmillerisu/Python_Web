@@ -2,4 +2,7 @@
 
 {% block content %}
     <h1>Home page of Cyclone Rocketry's ground station website</h1>
+    {%if acc_fn%}
+    <img src="{{acc_fn}}" alt="Cyclone Rocketry" style="width:400px;height:400px;">
+    {% endif %}
 {% endblock %}

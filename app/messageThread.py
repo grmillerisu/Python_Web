@@ -7,6 +7,9 @@ import copy
 import os
 from datetime import datetime
 import serial
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 class MessageThread(Thread):
    def __init__(self):
@@ -79,6 +82,10 @@ class MessageThread(Thread):
       cmd = "self.msgToSend = self.%s_msg" % msg_lower
       exec(cmd)
       socketio.emit('newmessage', self.msgToSend, namespace='/messaging')
+      if "acc" in msg_lower:
+         print("Plotting acceleration")
+         plotAcceleration()
+      # end if
    # end def
 
    def addMessageToList(self,messageName,msg):
@@ -117,3 +124,28 @@ class MessageThread(Thread):
    # end def
 
 # end class
+
+def plotAcceleration():
+   accx = []
+   accy = []
+   accz = []
+   with open("app/static/acceleration.txt","r") as fp:
+      line = fp.readline()
+      while line:
+         split_line = line.split(",")
+         accx.append(float(split_line[1]))
+         accy.append(float(split_line[3]))
+         accz.append(float(split_line[5].split("|")[0]))
+         line = fp.readline()
+   # Plot the data
+   n = len(accx)
+   n = np.linspace(1,n,n)
+   plt.figure()
+   plt.plot(n, accx, label='Accx')
+   plt.plot(n, accy, label='Accy')
+   plt.plot(n, accz, label='Accz')
+   # Add a legend
+   plt.legend()
+   # Show the plot
+   plt.savefig('app/static/acceleration.png', bbox_inches='tight')
+# end def
