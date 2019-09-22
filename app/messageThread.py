@@ -82,9 +82,9 @@ class MessageThread(Thread):
       cmd = "self.msgToSend = self.%s_msg" % msg_lower
       exec(cmd)
       socketio.emit('newmessage', self.msgToSend, namespace='/messaging')
-      if "acc" in msg_lower:
-         print("Plotting acceleration")
-         plotAcceleration()
+      ## if "acc" in msg_lower: # TODO - plot on JS end?
+      #   print("Plotting acceleration")
+      #   plotAcceleration()
       # end if
    # end def
 
@@ -140,7 +140,7 @@ def plotAcceleration():
    # Plot the data
    n = len(accx)
    n = np.linspace(1,n,n)
-   plt.figure()
+   plt.figure(1)
    plt.plot(n, accx, label='Accx')
    plt.plot(n, accy, label='Accy')
    plt.plot(n, accz, label='Accz')
@@ -148,4 +148,5 @@ def plotAcceleration():
    plt.legend()
    # Show the plot
    plt.savefig('app/static/acceleration.png', bbox_inches='tight')
+   plt.close(1)
 # end def
